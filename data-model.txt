@@ -1,0 +1,30 @@
+/*This defines the user table and each User has a username and password that are both of the data type STRING*/
+var User = db.define('user', {
+    username: Sequelize.STRING,
+    password: Sequelize.STRING // TODO: make the passwords more secure!
+});
+
+/*This defines the content table and each Content has a url and title that are both of the data type STRING*/
+// Even though the content belongs to users, we will setup the userId relationship later
+var Content = db.define('content', {
+    url: Sequelize.STRING,
+    title: Sequelize.STRING
+});
+
+/*This defines the vote table and each Vote has an upVote that is either true/false or boolean*/
+// Even though a vote has a link to user and content, we will setup the relationship later
+var Vote = db.define('vote', {
+    upVote: Sequelize.BOOLEAN
+});
+
+/*This tells us that the User and Content are linked where the user id primary key is a foreign key in content*/
+// User <-> Content relationship
+Content.belongsTo(User); // This will add a `setUser` function on content objects
+User.hasMany(Content); // This will add an `addContent` function on user objects
+
+/*This tells us that the Content and Vote are linked where the content id primary key is a foreign key in vote*/
+// User <-> Vote <-> Content relationship
+User.belongsToMany(Content, {through: Vote, as: 'Upvotes'}); // This will add an `add`
+Content.belongsToMany(User, {through: Vote});
+
+db.sync(); // Only needs to be used once!

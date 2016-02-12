@@ -1,0 +1,27 @@
+{
+  "name": "reddit_workshop",
+  "version": "1.0.0",
+  "description": "![reddit](https://i.imgur.com/8IZ0jRT.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyding1/nodejs-reddit-clone-workshop.git"
+  },
+  "keywords": [
+    "reddit",
+    "sequelize"
+  ],
+  "author": "Andy Ding",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andyding1/nodejs-reddit-clone-workshop/issues"
+  },
+  "homepage": "https://github.com/andyding1/nodejs-reddit-clone-workshop#readme",
+  "dependencies": {
+    "mysql": "^2.10.2",
+    "sequelize": "^3.19.2"
+  }
+}
