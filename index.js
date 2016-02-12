@@ -32,4 +32,38 @@ User.hasMany(Content); // This will add an `addContent` function on user objects
 User.belongsToMany(Content, {through: Vote, as: 'Upvotes'}); // This will add an `add`
 Content.belongsToMany(User, {through: Vote});
 
-db.sync(); // Only needs to be used once!
+//db.sync(); // Only needs to be used once!
+
+function createNewUser(username, password, callback){
+    var userCreated = User.create({
+        username: username,
+        password: password,
+    });
+    callback(userCreated);
+}
+
+// createNewUser('bonnie','ding',function(userCreated){
+//     console.log(userCreated);
+// });
+
+function createNewContent(userId,url,title,callback){
+    var contentAdded = Content.create({
+        userId: userId,
+        url: url,
+        title: title
+    });
+    callback(contentAdded);
+}
+
+// createNewContent('1','http://www.google.com','Google is a great website',function(contentAdded){
+//     console.log(contentAdded);
+// });
+
+function voteOnContent(contentId, userId, upVote, callback){
+    var voted = Vote.create({
+        contentId: contentId,
+        userId: userId,
+        upVote: upVote,
+    });
+    callback(voted);
+}

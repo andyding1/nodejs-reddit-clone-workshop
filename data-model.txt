@@ -27,4 +27,5 @@ User.hasMany(Content); // This will add an `addContent` function on user objects
 User.belongsToMany(Content, {through: Vote, as: 'Upvotes'}); // This will add an `add`
 Content.belongsToMany(User, {through: Vote});
 
+/*This will create all the tables*/
 db.sync(); // Only needs to be used once!
