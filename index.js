@@ -35,35 +35,56 @@ Content.belongsToMany(User, {through: Vote});
 //db.sync(); // Only needs to be used once!
 
 function createNewUser(username, password, callback){
-    var userCreated = User.create({
+    User.create({
         username: username,
         password: password,
+    }).then(function(result){
+        callback(result);
     });
-    callback(userCreated);
 }
 
 // createNewUser('bonnie','ding',function(userCreated){
 //     console.log(userCreated);
 // });
 
+// function createNewContent(userId,url,title,callback){
+//     Content.create({
+//         userId: userId,
+//         url: url,
+//         title: title
+//     }).then(function(result){
+//         callback(result);
+//     });
+// }
+
 function createNewContent(userId,url,title,callback){
-    var contentAdded = Content.create({
-        userId: userId,
-        url: url,
-        title: title
+    User.findById(userId).then(function(user){
+        user.createContent({
+            url: url,
+            title: title
+        }).then(function(result){
+            callback(result);
+        });
     });
-    callback(contentAdded);
 }
 
-// createNewContent('1','http://www.google.com','Google is a great website',function(contentAdded){
-//     console.log(contentAdded);
-// });
+//createNewContent('1','http://www.bologna.com','Bologna',console.log);
 
-function voteOnContent(contentId, userId, upVote, callback){
-    var voted = Vote.create({
-        contentId: contentId,
-        userId: userId,
-        upVote: upVote,
-    });
-    callback(voted);
-}
+// function voteOnContent(contentId, userId, upVote, callback){
+//     Vote.create({
+//         contentId: contentId,
+//         userId: userId,
+//         upVote: upVote,
+//     }).then(function(result){
+//         callback(result);
+//     });
+    
+// }
+
+//voteOnContent(1, 1, true, console.log);
+
+User.findAll({
+    include: Content, Vote
+    }).then(function(results){
+        console.log(JSON.stringify(results, 0, 4));
+    })
